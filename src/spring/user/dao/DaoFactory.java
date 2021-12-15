@@ -2,14 +2,18 @@ package spring.user.dao;
 
 public class DaoFactory {
     public UserDao userDao(){
-        return new UserDao(new PconnectionMaker());
+        return new UserDao(connectionMaker());
     }
 
     public AccountDao accountDao(){
-        return new AccountDao(new PconnectionMaker());
+        return new AccountDao(connectionMaker());
     }
 
     public MessageDao messageDao(){
-        return new MessageDao(new PconnectionMaker());
+        return new MessageDao(connectionMaker());
+    }
+
+    public ConnectionMaker connectionMaker(){
+        return new PconnectionMaker();
     }
 }
