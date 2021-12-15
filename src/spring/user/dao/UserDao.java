@@ -6,13 +6,8 @@ import java.sql.*;
 
 public class UserDao {
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Class.forName("org.postgresql.Driver");
+        Connection connection = getConnection();
 
-        String url = "jdbc:postgresql://172.30.1.45:5432/postgres";
-        String username = "postgres";
-        String password = "postgres";
-
-        Connection connection = DriverManager.getConnection(url,username,password);
         PreparedStatement pstmt = connection.prepareStatement("insert into users(id,name,password) values(?,?,?)");
         pstmt.setString(1,user.getId());
         pstmt.setString(2,user.getName());
@@ -25,13 +20,8 @@ public class UserDao {
 
     }
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Class.forName("org.postgresql.Driver");
+        Connection connection = getConnection();
 
-        String url = "jdbc:postgresql://172.30.1.45:5432/postgres";
-        String username = "postgres";
-        String password = "postgres";
-
-        Connection connection = DriverManager.getConnection(url,username,password);
         PreparedStatement pstmt = connection.prepareStatement("select * from users where id = ?");
         pstmt.setString(1,id);
 
@@ -48,5 +38,16 @@ public class UserDao {
         connection.close();
 
         return user;
+    }
+
+    private Connection getConnection() throws ClassNotFoundException, SQLException {
+        Class.forName("org.postgresql.Driver");
+
+        String url = "jdbc:postgresql://172.30.1.45:5432/postgres";
+        String username = "postgres";
+        String password = "postgres";
+
+        Connection connection = DriverManager.getConnection(url,username,password);
+        return connection;
     }
 }
