@@ -1,5 +1,6 @@
 package spring.user;
 
+import spring.user.dao.DaoFactory;
 import spring.user.dao.PconnectionMaker;
 import spring.user.dao.UserDao;
 import spring.user.domain.User;
@@ -8,7 +9,9 @@ import java.sql.SQLException;
 
 public class test {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        UserDao dao = new UserDao(new PconnectionMaker());
+        ApplicationContext ac = new AnnotationApplicationContext(DaoFactory.class);
+
+        UserDao dao = ac.getBean("userDao",UserDao.class);
         
         User user = new User();
         user.setId("white");
